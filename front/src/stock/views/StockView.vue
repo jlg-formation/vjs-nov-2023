@@ -1,3 +1,14 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import { type Article } from '../interfaces/Article'
+
+const articles = ref<Article[]>([
+  { id: 'a1', name: 'Tournevis', price: 2.99, qty: 123 },
+  { id: 'a2', name: 'Pelle', price: 12, qty: 45 },
+  { id: 'a3', name: 'Tondeuse à gazon', price: 123, qty: 5 }
+])
+</script>
+
 <template>
   <main>
     <h1>Liste des articles</h1>
@@ -23,25 +34,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="name">Tournevis</td>
-            <td class="price number">2.99 €</td>
-            <td class="qty number">123</td>
-          </tr>
-          <tr>
-            <td class="name">Pelle</td>
-            <td class="price number">12.99 €</td>
-            <td class="qty number">14</td>
-          </tr>
-          <tr>
-            <td class="name">Marteau</td>
-            <td class="price number">2.99 €</td>
-            <td class="qty number">123</td>
-          </tr>
-          <tr>
-            <td class="name">Tondeuse</td>
-            <td class="price number">2.99 €</td>
-            <td class="qty number">123</td>
+          <tr v-for="a in articles" v-bind:key="a.id" :title="a.id">
+            <td class="name">{{ a.name }}</td>
+            <td class="price number">{{ a.price }} €</td>
+            <td class="qty number">{{ a.qty }}</td>
           </tr>
         </tbody>
       </table>
