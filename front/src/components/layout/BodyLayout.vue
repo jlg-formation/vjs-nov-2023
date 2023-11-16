@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { RouterView } from 'vue-router'
+</script>
+
 <template>
-  <p>Body works!</p>
+  <RouterView />
 </template>
