@@ -25,23 +25,23 @@
         <tbody>
           <tr>
             <td class="name">Tournevis</td>
-            <td class="price">2.99 €</td>
-            <td class="qty">123</td>
+            <td class="price number">2.99 €</td>
+            <td class="qty number">123</td>
           </tr>
           <tr>
             <td class="name">Pelle</td>
-            <td class="price">12.99 €</td>
-            <td class="qty">14</td>
+            <td class="price number">12.99 €</td>
+            <td class="qty number">14</td>
           </tr>
           <tr>
             <td class="name">Marteau</td>
-            <td class="price">2.99 €</td>
-            <td class="qty">123</td>
+            <td class="price number">2.99 €</td>
+            <td class="qty number">123</td>
           </tr>
           <tr>
             <td class="name">Tondeuse</td>
-            <td class="price">2.99 €</td>
-            <td class="qty">123</td>
+            <td class="price number">2.99 €</td>
+            <td class="qty number">123</td>
           </tr>
         </tbody>
       </table>
@@ -76,8 +76,22 @@ table {
   }
 
   tbody {
+    cursor: pointer;
+
     tr:nth-child(even) {
       background: #eee;
+    }
+
+    tr:hover {
+      background: #ddd;
+    }
+
+    tr.selected {
+      background: #ccc;
+    }
+
+    td.number {
+      text-align: right;
     }
   }
 }
