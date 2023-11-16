@@ -1,6 +1,10 @@
+<script setup lang="ts">
+import { RouterLink } from 'vue-router'
+</script>
+
 <template>
   <footer>
-    <a href="#"> Mentions Légales </a>
+    <RouterLink to="/legal"> Mentions Légales </RouterLink>
   </footer>
 </template>
 
