@@ -1,12 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { type Article } from '../interfaces/Article'
+import { useArticleStore } from '../stores/ArticleStore'
+const store = useArticleStore()
 
-const articles = ref<Article[]>([
-  { id: 'a1', name: 'Tournevis', price: 2.99, qty: 123 },
-  { id: 'a2', name: 'Pelle', price: 12, qty: 45 },
-  { id: 'a3', name: 'Tondeuse à gazon', price: 123, qty: 5 }
-])
+const articles = store.articles
 </script>
 
 <template>
