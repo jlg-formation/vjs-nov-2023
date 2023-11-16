@@ -18,6 +18,7 @@ footer {
   justify-content: center;
 
   a {
+    padding: 0.5em 1em;
     color: inherit;
     text-decoration: inherit;
 

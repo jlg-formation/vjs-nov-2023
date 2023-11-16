@@ -15,7 +15,7 @@ const router = createRouter({
       name: 'legal',
       component: () => import('../views/LegalView.vue')
     },
-    stockRouter
+    ...stockRouter
   ]
 })
 

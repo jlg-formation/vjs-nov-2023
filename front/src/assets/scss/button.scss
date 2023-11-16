@@ -4,6 +4,11 @@ button,
   align-items: center;
   justify-content: center;
   gap: 0.5em;
+  &:focus {
+    outline-color: #aaa;
+    outline-width: 0.2em;
+    outline-style: solid;
+  }
 
   background: #eee;
   border: 0.1em solid #eee;
