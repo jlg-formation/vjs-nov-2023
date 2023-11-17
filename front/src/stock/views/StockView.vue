@@ -9,12 +9,15 @@ const articles = store.articles
 const selectedArticles = ref(new Set<Article>())
 
 const handleClick = (a: Article) => {
-  console.log('a: ', a)
   if (selectedArticles.value.has(a)) {
     selectedArticles.value.delete(a)
     return
   }
   selectedArticles.value.add(a)
+}
+
+const handleRemove = () => {
+  console.log('about to remove...')
 }
 </script>
 
@@ -29,7 +32,7 @@ const handleClick = (a: Article) => {
         <RouterLink class="button" to="/stock/add" title="Ajouter">
           <font-awesome-icon icon="fa-solid fa-plus" />
         </RouterLink>
-        <button title="Supprimer" v-show="selectedArticles.size > 0">
+        <button title="Supprimer" v-show="selectedArticles.size > 0" @click="handleRemove">
           <font-awesome-icon icon="fa-solid fa-trash-can" />
         </button>
       </nav>
