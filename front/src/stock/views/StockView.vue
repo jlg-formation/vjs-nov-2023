@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 import type { Article } from '../interfaces/Article'
 import { useArticleStore } from '../stores/ArticleStore'
 const store = useArticleStore()
 
-const articles = store.articles
+const { articles } = storeToRefs(store)
 
 const selectedArticles = ref(new Set<Article>())
 
@@ -18,6 +19,8 @@ const handleClick = (a: Article) => {
 
 const handleRemove = () => {
   console.log('about to remove...')
+  const ids: Set<string> = new Set([...selectedArticles.value].map((a) => a.id))
+  store.deleteArticle(ids)
 }
 </script>
 

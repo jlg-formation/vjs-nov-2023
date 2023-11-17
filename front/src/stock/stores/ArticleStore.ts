@@ -13,5 +13,10 @@ export const useArticleStore = defineStore('article', () => {
     articles.value.push({ ...newArticle, id: window.crypto.randomUUID() })
   }
 
-  return { articles, articleTotal, addArticle }
+  const deleteArticle = (ids: Set<string>) => {
+    console.log('delete articles', ids)
+    articles.value = articles.value.filter((a) => !ids.has(a.id))
+  }
+
+  return { articles, articleTotal, addArticle, deleteArticle }
 })
