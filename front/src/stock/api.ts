@@ -43,6 +43,7 @@ class API {
   }
 
   async retrieveAll(): Promise<Article[]> {
+    await sleep(300)
     try {
       const response = await fetch(url)
       const articles = await response.json()
