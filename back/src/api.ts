@@ -8,12 +8,12 @@ let articles: Article[] = [
   { id: 'a1', name: 'Tournevis', price: 2.99, qty: 123 },
 ];
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', '*');
-  res.setHeader('Access-Control-Allow-Methods', '*');
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', '*');
+//   res.setHeader('Access-Control-Allow-Headers', '*');
+//   res.setHeader('Access-Control-Allow-Methods', '*');
+//   next();
+// });
 
 app.get('/articles', (req, res) => {
   res.json(articles);
