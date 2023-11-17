@@ -10,8 +10,9 @@ export const useArticleStore = defineStore('article', () => {
     { id: 'a3', name: 'Tondeuse à gazon', price: 123, qty: 5 }
   ])
   const articleTotal = computed(() => articles.value.length)
-  const addArticle = (newArticle: NewArticle) => {
-    articles.value.push({ ...newArticle, id: window.crypto.randomUUID() })
+  const addArticle = async (newArticle: NewArticle) => {
+    await api.addArticle(newArticle)
+    await refresh()
   }
 
   const deleteArticle = (ids: Set<string>) => {

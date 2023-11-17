@@ -13,10 +13,10 @@ const newArticle = ref<NewArticle>({
   qty: 1
 })
 
-const handleSubmit = (event: Event) => {
+const handleSubmit = async (event: Event) => {
   event.preventDefault()
   console.log('coucou')
-  store.addArticle(newArticle.value)
+  await store.addArticle(newArticle.value)
   router.push({ name: 'stock' })
 }
 </script>
