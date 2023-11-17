@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import type { Article } from '../interfaces/Article'
 import { useArticleStore } from '../stores/ArticleStore'
 const store = useArticleStore()
@@ -61,6 +61,14 @@ const handleRefresh = async () => {
     isRefreshing.value = false
   }
 }
+
+onMounted(async () => {
+  console.log('on mounted')
+  if (articles.value === undefined) {
+    await store.refresh()
+    console.log('initialized')
+  }
+})
 </script>
 
 <template>
@@ -93,7 +101,16 @@ const handleRefresh = async () => {
           </tr>
         </thead>
         <tbody>
+          <tr v-if="articles === undefined">
+            <td colspan="3">
+              <div class="loading">
+                <font-awesome-icon icon="fa-circle-notch" spin="true" />
+                <span>En chargement...</span>
+              </div>
+            </td>
+          </tr>
           <tr
+            v-else
             v-for="a in articles"
             v-bind:key="a.id"
             :title="a.id"
@@ -156,6 +173,13 @@ table {
 
     td.number {
       text-align: right;
+    }
+
+    div.loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5em;
     }
   }
 }

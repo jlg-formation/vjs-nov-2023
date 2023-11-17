@@ -4,12 +4,8 @@ import type { Article, NewArticle } from '../interfaces/Article'
 import { api } from '../api'
 
 export const useArticleStore = defineStore('article', () => {
-  const articles = ref<Article[]>([
-    { id: 'a1', name: 'Tournevis', price: 2.99, qty: 123 },
-    { id: 'a2', name: 'Pelle', price: 12, qty: 45 },
-    { id: 'a3', name: 'Tondeuse à gazon', price: 123, qty: 5 }
-  ])
-  const articleTotal = computed(() => articles.value.length)
+  const articles = ref<Article[]>()
+  const articleTotal = computed(() => articles.value?.length ?? 0)
   const addArticle = async (newArticle: NewArticle) => {
     await api.addArticle(newArticle)
     await refresh()
