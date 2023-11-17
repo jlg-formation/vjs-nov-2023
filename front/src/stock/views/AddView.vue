@@ -2,18 +2,21 @@
 import { useRouter } from 'vue-router'
 import { useArticleStore } from '../stores/ArticleStore'
 import { ref } from 'vue'
+import type { NewArticle } from '../interfaces/Article'
 
 const router = useRouter()
 const store = useArticleStore()
 
-const name = ref('')
-const price = ref(0)
-const qty = ref(1)
+const newArticle = ref<NewArticle>({
+  name: '',
+  price: 0,
+  qty: 1
+})
 
 const handleSubmit = (event: Event) => {
   event.preventDefault()
   console.log('coucou')
-  store.addArticle({ name: name.value, price: price.value, qty: qty.value })
+  store.addArticle(newArticle.value)
   router.push({ name: 'stock' })
 }
 </script>
@@ -24,17 +27,17 @@ const handleSubmit = (event: Event) => {
     <form @submit="handleSubmit">
       <label>
         <span>Nom</span>
-        <input type="text" v-model="name" />
+        <input type="text" v-model="newArticle.name" />
         <span class="error"></span>
       </label>
       <label>
         <span>Prix</span>
-        <input type="number" v-model="price" />
+        <input type="number" v-model="newArticle.price" />
         <span class="error"></span>
       </label>
       <label>
         <span>Quantité</span>
-        <input type="number" v-model="qty" />
+        <input type="number" v-model="newArticle.qty" />
         <span class="error"></span>
       </label>
       <div class="error"></div>
