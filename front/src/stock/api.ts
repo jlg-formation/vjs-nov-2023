@@ -5,7 +5,7 @@ const url = 'http://localhost:3000/api/articles'
 
 class API {
   async addArticle(newArticle: NewArticle) {
-    await sleep(3000)
+    await sleep(300)
     try {
       const response = await fetch(url, {
         method: 'POST',

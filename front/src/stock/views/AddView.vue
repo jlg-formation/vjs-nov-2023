@@ -8,6 +8,7 @@ const router = useRouter()
 const store = useArticleStore()
 
 const isAdding = ref(false)
+const errorMsg = ref('')
 
 const newArticle = ref<NewArticle>({
   name: '',
@@ -20,10 +21,14 @@ const handleSubmit = async () => {
 
   try {
     isAdding.value = true
+    errorMsg.value = ''
     await store.addArticle(newArticle.value)
     router.push({ name: 'stock' })
   } catch (err) {
     console.log('err: ', err)
+    if (err instanceof Error) {
+      errorMsg.value = err.message
+    }
   } finally {
     isAdding.value = false
   }
@@ -49,7 +54,7 @@ const handleSubmit = async () => {
         <input type="number" v-model="newArticle.qty" />
         <span class="error"></span>
       </label>
-      <div class="error"></div>
+      <div class="error">{{ errorMsg }}</div>
       <button type="submit" class="primary" :disabled="isAdding">
         <font-awesome-icon icon="fa-solid fa-plus" />
         <span>Ajouter</span>
@@ -82,6 +87,9 @@ form {
   div.error {
     display: flex;
     height: 3em;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
   }
 }
 </style>
