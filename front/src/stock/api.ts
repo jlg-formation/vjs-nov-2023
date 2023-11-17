@@ -1,9 +1,11 @@
+import { sleep } from '@/misc'
 import type { Article, NewArticle } from './interfaces/Article'
 
 const url = 'http://localhost:3000/api/articles'
 
 class API {
   async addArticle(newArticle: NewArticle) {
+    await sleep(3000)
     try {
       const response = await fetch(url, {
         method: 'POST',
