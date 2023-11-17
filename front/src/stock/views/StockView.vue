@@ -1,8 +1,21 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import type { Article } from '../interfaces/Article'
 import { useArticleStore } from '../stores/ArticleStore'
 const store = useArticleStore()
 
 const articles = store.articles
+
+const selectedArticles = ref(new Set<Article>())
+
+const handleClick = (a: Article) => {
+  console.log('a: ', a)
+  if (selectedArticles.value.has(a)) {
+    selectedArticles.value.delete(a)
+    return
+  }
+  selectedArticles.value.add(a)
+}
 </script>
 
 <template>
@@ -30,7 +43,13 @@ const articles = store.articles
           </tr>
         </thead>
         <tbody>
-          <tr v-for="a in articles" v-bind:key="a.id" :title="a.id">
+          <tr
+            v-for="a in articles"
+            v-bind:key="a.id"
+            :title="a.id"
+            @click="handleClick(a)"
+            :class="{ selected: selectedArticles.has(a) }"
+          >
             <td class="name">{{ a.name }}</td>
             <td class="price number">{{ a.price }} €</td>
             <td class="qty number">{{ a.qty }}</td>
