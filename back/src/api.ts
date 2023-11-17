@@ -27,6 +27,10 @@ app.post('/articles', (req, res) => {
   // stocker dans le tableau articles
   // renvoyer une reponse
   const newArticle: NewArticle = req.body;
+  if (newArticle.name === 'toto') {
+    res.status(400).end('toto is refused...');
+    return;
+  }
   const newId = randomUUID();
   articles.push({ ...newArticle, id: newId });
   console.log('articles: ', articles);
