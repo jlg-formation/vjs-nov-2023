@@ -29,7 +29,7 @@ const handleClick = (a: Article) => {
         <RouterLink class="button" to="/stock/add" title="Ajouter">
           <font-awesome-icon icon="fa-solid fa-plus" />
         </RouterLink>
-        <button title="Supprimer">
+        <button title="Supprimer" v-if="selectedArticles.size > 0">
           <font-awesome-icon icon="fa-solid fa-trash-can" />
         </button>
       </nav>
