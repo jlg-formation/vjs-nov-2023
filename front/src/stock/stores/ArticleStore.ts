@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { Article, NewArticle } from '../interfaces/Article'
+import { api } from '../api'
 
 export const useArticleStore = defineStore('article', () => {
   const articles = ref<Article[]>([
@@ -18,5 +19,9 @@ export const useArticleStore = defineStore('article', () => {
     articles.value = articles.value.filter((a) => !ids.has(a.id))
   }
 
-  return { articles, articleTotal, addArticle, deleteArticle }
+  const refresh = async () => {
+    articles.value = await api.retrieveAll()
+  }
+
+  return { articles, articleTotal, addArticle, deleteArticle, refresh }
 })

@@ -5,6 +5,8 @@ import type { Article } from '../interfaces/Article'
 import { useArticleStore } from '../stores/ArticleStore'
 const store = useArticleStore()
 
+const errorMsg = ref('')
+
 const { articles } = storeToRefs(store)
 
 const selectedArticles = ref(new Set<Article>())
@@ -24,9 +26,15 @@ const handleRemove = () => {
   selectedArticles.value.clear()
 }
 
-const handleRefresh = () => {
-  console.log('refresh')
-  // await store.refresh()
+const handleRefresh = async () => {
+  try {
+    console.log('refresh')
+    await store.refresh()
+  } catch (err) {
+    if (err instanceof Error) {
+      errorMsg.value = err.message
+    }
+  }
 }
 </script>
 
@@ -45,7 +53,7 @@ const handleRefresh = () => {
           <font-awesome-icon icon="fa-solid fa-trash-can" />
         </button>
       </nav>
-      <div class="error"></div>
+      <div class="error">{{ errorMsg }}</div>
       <table>
         <thead>
           <tr>
@@ -80,6 +88,9 @@ nav {
 
 div.error {
   height: 3em;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
 }
 
 table {
