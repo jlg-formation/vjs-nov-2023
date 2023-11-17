@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import type { Article } from '../interfaces/Article'
 import { useArticleStore } from '../stores/ArticleStore'
 const store = useArticleStore()
 
 const errorMsg = ref('')
+
+const isRefreshing = ref(false)
+
+const refreshIcon = computed(() => {
+  console.log('recalcule refreshIcon')
+  return 'fa-solid ' + (isRefreshing.value ? 'fa-circle-notch' : 'fa-rotate-right')
+})
 
 const { articles } = storeToRefs(store)
 
@@ -29,11 +36,15 @@ const handleRemove = () => {
 const handleRefresh = async () => {
   try {
     console.log('refresh')
+    errorMsg.value = ''
+    isRefreshing.value = true
     await store.refresh()
   } catch (err) {
     if (err instanceof Error) {
       errorMsg.value = err.message
     }
+  } finally {
+    isRefreshing.value = false
   }
 }
 </script>
@@ -43,8 +54,8 @@ const handleRefresh = async () => {
     <h1>Liste des articles</h1>
     <div class="content">
       <nav>
-        <button title="Refresh" @click="handleRefresh">
-          <font-awesome-icon icon="fa-solid fa-rotate-right" />
+        <button title="Refresh" @click="handleRefresh" :disabled="isRefreshing">
+          <font-awesome-icon :icon="refreshIcon" :spin="isRefreshing" />
         </button>
         <RouterLink class="button" to="/stock/add" title="Ajouter">
           <font-awesome-icon icon="fa-solid fa-plus" />
