@@ -7,6 +7,8 @@ import type { NewArticle } from '../interfaces/Article'
 const router = useRouter()
 const store = useArticleStore()
 
+const isAdding = ref(false)
+
 const newArticle = ref<NewArticle>({
   name: '',
   price: 0,
@@ -16,8 +18,16 @@ const newArticle = ref<NewArticle>({
 const handleSubmit = async (event: Event) => {
   event.preventDefault()
   console.log('coucou')
-  await store.addArticle(newArticle.value)
-  router.push({ name: 'stock' })
+
+  try {
+    isAdding.value = true
+    await store.addArticle(newArticle.value)
+    router.push({ name: 'stock' })
+  } catch (err) {
+    console.log('err: ', err)
+  } finally {
+    isAdding.value = false
+  }
 }
 </script>
 
@@ -41,7 +51,7 @@ const handleSubmit = async (event: Event) => {
         <span class="error"></span>
       </label>
       <div class="error"></div>
-      <button type="submit" class="primary">
+      <button type="submit" class="primary" :disabled="isAdding">
         <font-awesome-icon icon="fa-solid fa-plus" />
         <span>Ajouter</span>
       </button>
