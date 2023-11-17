@@ -15,8 +15,7 @@ const newArticle = ref<NewArticle>({
   qty: 1
 })
 
-const handleSubmit = async (event: Event) => {
-  event.preventDefault()
+const handleSubmit = async () => {
   console.log('coucou')
 
   try {
@@ -34,7 +33,7 @@ const handleSubmit = async (event: Event) => {
 <template>
   <main>
     <h1>Ajouter un article</h1>
-    <form @submit="handleSubmit">
+    <form @submit.prevent="handleSubmit">
       <label>
         <span>Nom</span>
         <input type="text" v-model="newArticle.name" />
