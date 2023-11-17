@@ -1,6 +1,12 @@
+<script setup lang="ts">
+import { TotalArticles } from '../stock/TotalArticles'
+</script>
+
 <template>
   <main>
     <h1>Mentions Légales</h1>
+
+    <TotalArticles color="truc" />
 
     <p>
       Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia ut deserunt consequuntur
