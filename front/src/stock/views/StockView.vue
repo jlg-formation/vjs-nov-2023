@@ -26,6 +26,7 @@ const handleRemove = () => {
 
 const handleRefresh = () => {
   console.log('refresh')
+  // await store.refresh()
 }
 </script>
 
