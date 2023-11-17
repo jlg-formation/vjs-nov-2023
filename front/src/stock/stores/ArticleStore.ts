@@ -15,9 +15,10 @@ export const useArticleStore = defineStore('article', () => {
     await refresh()
   }
 
-  const deleteArticle = (ids: Set<string>) => {
+  const deleteArticle = async (ids: Set<string>) => {
     console.log('delete articles', ids)
-    articles.value = articles.value.filter((a) => !ids.has(a.id))
+    await api.deleteArticle(ids)
+    await refresh()
   }
 
   const refresh = async () => {

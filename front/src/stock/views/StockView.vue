@@ -8,11 +8,16 @@ const store = useArticleStore()
 const errorMsg = ref('')
 
 const isRefreshing = ref(false)
+const isRemoving = ref(false)
 
 const refreshIcon = computed(() => {
   console.log('recalcule refreshIcon')
   return 'fa-solid ' + (isRefreshing.value ? 'fa-circle-notch' : 'fa-rotate-right')
 })
+
+const removeIcon = computed(
+  () => 'fa-solid ' + (isRemoving.value ? 'fa-circle-notch' : 'fa-trash-can')
+)
 
 const { articles } = storeToRefs(store)
 
@@ -26,11 +31,20 @@ const handleClick = (a: Article) => {
   selectedArticles.value.add(a)
 }
 
-const handleRemove = () => {
-  console.log('about to remove...')
-  const ids: Set<string> = new Set([...selectedArticles.value].map((a) => a.id))
-  store.deleteArticle(ids)
-  selectedArticles.value.clear()
+const handleRemove = async () => {
+  try {
+    isRemoving.value = true
+    console.log('about to remove...')
+    const ids: Set<string> = new Set([...selectedArticles.value].map((a) => a.id))
+    await store.deleteArticle(ids)
+    selectedArticles.value.clear()
+  } catch (err) {
+    if (err instanceof Error) {
+      errorMsg.value = err.message
+    }
+  } finally {
+    isRemoving.value = false
+  }
 }
 
 const handleRefresh = async () => {
@@ -60,8 +74,13 @@ const handleRefresh = async () => {
         <RouterLink class="button" to="/stock/add" title="Ajouter">
           <font-awesome-icon icon="fa-solid fa-plus" />
         </RouterLink>
-        <button title="Supprimer" v-show="selectedArticles.size > 0" @click="handleRemove">
-          <font-awesome-icon icon="fa-solid fa-trash-can" />
+        <button
+          title="Supprimer"
+          v-show="selectedArticles.size > 0"
+          @click="handleRemove"
+          :disabled="isRemoving"
+        >
+          <font-awesome-icon :icon="removeIcon" :spin="isRemoving" />
         </button>
       </nav>
       <div class="error">{{ errorMsg }}</div>

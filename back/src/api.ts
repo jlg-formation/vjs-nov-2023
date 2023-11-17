@@ -4,14 +4,14 @@ import { Article, NewArticle } from './interfaces/Article';
 
 const app = express.Router();
 
-const articles: Article[] = [
+let articles: Article[] = [
   { id: 'a1', name: 'Tournevis', price: 2.99, qty: 123 },
 ];
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', '*');
-  // res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', '*');
   next();
 });
 
@@ -35,6 +35,16 @@ app.post('/articles', (req, res) => {
   articles.push({ ...newArticle, id: newId });
   console.log('articles: ', articles);
   res.status(201).end();
+});
+
+app.delete('/articles', (req, res) => {
+  // recuperer les ids
+  // filtrer
+  // renvoyer response vide (204)
+
+  const ids: string[] = req.body;
+  articles = articles.filter((a) => !ids.includes(a.id));
+  res.status(204).end();
 });
 
 export default app;

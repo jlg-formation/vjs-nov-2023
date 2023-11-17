@@ -23,6 +23,25 @@ class API {
     }
   }
 
+  async deleteArticle(ids: Set<string>) {
+    await sleep(300)
+    try {
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify([...ids])
+      })
+      if (response.status >= 400) {
+        throw new Error('Erreur Technique')
+      }
+    } catch (err) {
+      console.log('err: ', err)
+      throw new Error('Erreur Technique')
+    }
+  }
+
   async retrieveAll(): Promise<Article[]> {
     try {
       const response = await fetch(url)
