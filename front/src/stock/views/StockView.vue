@@ -21,6 +21,11 @@ const handleRemove = () => {
   console.log('about to remove...')
   const ids: Set<string> = new Set([...selectedArticles.value].map((a) => a.id))
   store.deleteArticle(ids)
+  selectedArticles.value.clear()
+}
+
+const handleRefresh = () => {
+  console.log('refresh')
 }
 </script>
 
@@ -29,7 +34,7 @@ const handleRemove = () => {
     <h1>Liste des articles</h1>
     <div class="content">
       <nav>
-        <button title="Refresh">
+        <button title="Refresh" @click="handleRefresh">
           <font-awesome-icon icon="fa-solid fa-rotate-right" />
         </button>
         <RouterLink class="button" to="/stock/add" title="Ajouter">
